@@ -1,0 +1,70 @@
+/* ==============================================================================
+   SHARED CONTROLS: buttons, chips, badges, lift
+   ==============================================================================
+
+   USED BY   every page
+
+   Small interface pieces that are not tied to one page.
+
+   CLASS INDEX
+     .btn / .btn-lg    layout of a button (size, centring). Colour comes from .skin-btn*.
+     .chip             pill used for filters and section pickers. aria-pressed / aria-current make it blue.
+     .badge            tiny rounded label ("New", "You own this")
+     .card-lift        card that rises 4px on hover
+   ============================================================================== */
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  .btn-lg { min-height: 3.5rem; padding-inline: 2rem; font-size: 1.125rem; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border: 2px solid var(--skin-edge);
+    border-radius: 9999px;
+    background: var(--skin-surface);
+    color: var(--skin-ink);
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: transform calc(0.15s * var(--dur-scale)), background-color calc(0.15s * var(--dur-scale)), color calc(0.15s * var(--dur-scale)), border-color calc(0.15s * var(--dur-scale));
+  }
+  .chip:hover { transform: translateY(-2px); background: var(--color-sun); }
+  .chip[aria-pressed="true"],
+  .chip[aria-current="page"],
+  .chip[aria-current="true"] {
+    background: var(--skin-accent);
+    color: var(--skin-accent-ink);
+    border-color: var(--skin-accent);
+  }
+  .chip[aria-pressed="true"]:hover,
+  .chip[aria-current="page"]:hover,
+  .chip[aria-current="true"]:hover {
+    background: color-mix(in oklch, var(--skin-accent) 92%, white);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+
+  .card-lift { transition: transform calc(0.2s * var(--dur-scale)); }
+  .card-lift:hover { transform: translateY(-4px); }
+}

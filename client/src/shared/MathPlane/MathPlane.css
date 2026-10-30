@@ -1,0 +1,47 @@
+/* ==============================================================================
+   MATH PLANE (graph-paper section)
+   ==============================================================================
+
+   USED BY   shared/MathPlane/MathPlane.jsx (cart "thank you" panel, pages/MotionLab)
+
+   A section drawn like graph paper: unit grid, heavier lines every few units, an x axis along
+   the bottom and a y axis down the left, with numbers that are real pixel distances from the origin.
+   JSX sets the variables:
+       --u    size of one small square      --M   distance between numbered lines
+       --ox   origin from the left edge     --oy  origin from the bottom edge
+       --i    which numbered tick (set per tick)
+
+   CLASS INDEX
+     .math-plane            the grid (four gradients: major + minor, vertical + horizontal)
+     .math-plane-axis-x/y    the two axis lines
+     .math-plane-tick-*      number labels along the axes
+     .math-plane-label-x/y   the axis names
+   ============================================================================== */
+
+@layer components {
+  .math-plane {
+    --plane-minor: rgba(26,46,74,0.06);
+    --plane-major: rgba(26,46,74,0.12);
+    background-image:
+      linear-gradient(var(--plane-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--plane-major) 1px, transparent 1px),
+      linear-gradient(var(--plane-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--plane-minor) 1px, transparent 1px);
+    background-size:
+      var(--M, 120px) var(--M, 120px), var(--M, 120px) var(--M, 120px),
+      var(--u, 24px)  var(--u, 24px),  var(--u, 24px)  var(--u, 24px);
+    background-position: left var(--ox, 0px) bottom var(--oy, 0px);
+  }
+  .math-plane-axis-x, .math-plane-axis-y {
+    position: absolute;
+    background: color-mix(in oklch, var(--skin-link) 75%, transparent);
+  }
+  .math-plane-axis-x { left: 0; right: 0; bottom: calc(var(--oy, 0px) - 1px); height: 2px; }
+  .math-plane-axis-y { top: 0; bottom: 0; left: var(--ox, 0px); width: 2px; }
+
+  .math-plane-tick-origin { left: calc(var(--ox, 0px) - 6px);  bottom: calc(var(--oy, 0px) - 18px); }
+  .math-plane-tick-x { left: calc(var(--ox, 0px) + var(--i, 1) * var(--M, 120px)); bottom: calc(var(--oy, 0px) - 20px); }
+  .math-plane-tick-y { left: 0; width: calc(var(--ox, 0px) - 8px); bottom: calc(var(--oy, 0px) + var(--i, 1) * var(--M, 120px) - 8px); }
+  .math-plane-label-x { right: 12px; bottom: calc(var(--oy, 0px) + 6px); }
+  .math-plane-label-y { left: calc(var(--ox, 0px) + 8px); top: 8px; }
+}

@@ -1,0 +1,42 @@
+/* ==============================================================================
+   TYPOGRAPHY
+   ==============================================================================
+
+   USED BY   every page (class names t-display, t-section, ... in JSX)
+
+   The type scale. Sizes use clamp(), so headings grow smoothly between phone and desktop
+   without media queries.
+
+   CLASS INDEX
+     Headings   .t-display (page title)  .t-section  .t-title  .t-card-title
+     Text       .t-lede (intro paragraph)  .t-body  .t-meta (small grey line)
+     Label      .t-eyebrow (white pill above a heading)
+   ============================================================================== */
+
+@layer components {
+  .t-display, .t-section, .t-title, .t-card-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+  .t-display { font-size: clamp(2.75rem, 9vw, 5.25rem); line-height: 0.95; letter-spacing: -0.04em; }
+  .t-section { font-size: clamp(2.25rem, 6vw, 3.75rem); line-height: 1;    letter-spacing: -0.035em; }
+  .t-title   { font-size: clamp(1.5rem, 3vw, 1.875rem); line-height: 1.1;  letter-spacing: -0.02em; }
+  .t-card-title { font-size: 1.25rem; line-height: 1.15; letter-spacing: -0.015em; }
+  @media (min-width: 768px) { .t-card-title { font-size: 1.5rem; } }
+
+  .t-lede { max-width: 44ch; font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.4; color: var(--color-muted); }
+  .t-body { font-size: 1.0625rem; line-height: 1.55; color: var(--color-muted); }
+  .t-meta { font-size: 0.9375rem; line-height: 1.4; font-weight: 500; color: var(--color-muted); }
+
+  .t-eyebrow {
+    display: inline-block;
+    border-radius: 9999px;
+    background: var(--skin-surface);
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-blue);
+  }
+}

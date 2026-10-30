@@ -1,0 +1,50 @@
+/* ==============================================================================
+   HEADER (auto-hiding Shelf bar + section drop-down)
+   ==============================================================================
+
+   USED BY   layout/Header/Header.jsx, layout/Header/SlidingTabs.jsx (.flyout)
+
+   Under the logo there is ONE row of tabs, the Shelf bar (All shelves, Kids, Teens ...). The old second row
+   (the Section bar: Everything, Fiction, Non-fiction ...) was removed. A shelf's sections now open as a
+   drop-down under its tab, and the highlighted tab opens its own when you click / tap it.
+   When the visitor scrolls down the Shelf bar tucks away, and it comes back as they scroll up.
+   lib/useHeaderScroll.js sets data-tuck on the <header> ("none" | "tabs") WITHOUT
+   re-rendering React; this file does all the visual work.
+
+   The visitor can PIN the menu (pin button in the top bar, or "Pin menu" in the phone menu). While pinned, useHeaderScroll
+   keeps data-tuck="none", so the row is never hidden. Unpinned is the auto-hide behaviour described above.
+
+   SPEED: every duration is multiplied by --dur-scale (tokens.css). One number there makes the whole site calmer or quicker.
+
+   CLASS INDEX
+     .site-header-row             a grid row that can collapse to 0 height (grid-template-rows: 1fr -> 0fr)
+     data-tuck="tabs"              the Shelf bar is hidden
+     .flyout                      the section drop-down (grows out of its tab, items arrive one after another)
+     .flyout[data-state="closing"] plays the closing animation before the menu is removed
+   ============================================================================== */
+
+@layer components {
+  .site-header-row {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows calc(0.2s * var(--dur-scale)) ease-out, opacity calc(0.2s * var(--dur-scale)) ease-out;
+  }
+  .site-header-row > * { min-height: 0; overflow: hidden; }
+  .site-header[data-tuck="tabs"] [data-row="tabs"] { grid-template-rows: 0fr; opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .site-header-row { transition: none; } }
+
+  /* the section drop-down: grows down out of its tab, then the items slide in one after another */
+  .flyout {
+    transform-origin: 24px 0;
+    animation: flyout-in calc(380ms * var(--dur-scale)) var(--ease-out-soft) both;
+  }
+  .flyout[data-state="closing"] {
+    animation: flyout-out calc(220ms * var(--dur-scale)) var(--ease-in-soft) both;
+    pointer-events: none;
+  }
+  .flyout li {
+    animation: flyout-item calc(320ms * var(--dur-scale)) var(--ease-out-soft) both;
+    animation-delay: calc((120ms + var(--i, 0) * 55ms) * var(--dur-scale));
+  }
+  .flyout[data-state="closing"] li { animation: none; }
+}

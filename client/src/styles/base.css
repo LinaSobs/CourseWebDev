@@ -1,0 +1,63 @@
+/* ==============================================================================
+   BASE (element defaults)
+   ==============================================================================
+
+   USED BY   every page
+
+   Page-wide defaults that apply to plain HTML elements: smooth scrolling, the body font,
+   focus rings, spacing from the left/right edge (--gutter), and the header height variable
+   --header-h (kept up to date by lib/useHeaderHeight.js so anchor links land below the header).
+
+   CLASS INDEX
+     --gutter / --header-h   layout variables read by Container and the scroll code
+     html / body             font, colour, no sideways scroll
+     img, video, svg         never wider than their box
+     :focus-visible          the keyboard focus ring
+     prefers-reduced-motion  animations and smooth scroll switched off
+   ============================================================================== */
+
+@layer base {
+  :root {
+    --gutter-base:  max(1rem, 4vw);
+    --gutter-start: max(var(--gutter-base), env(safe-area-inset-left, 0px));
+    --gutter-end:   max(var(--gutter-base), env(safe-area-inset-right, 0px));
+    --gutter: var(--gutter-start);
+    --header-h: 118px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    line-height: 1.55;
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img, video, svg { display: block; max-width: 100%; }
+
+  :focus-visible {
+    outline: 3px solid var(--skin-focus);
+    outline-offset: 2px;
+  }
+
+  [role="tabpanel"]:focus,
+  [role="tabpanel"]:focus-visible { outline: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+/* ==============================================================================
+   MANUAL KILL SWITCH FOR SLOW DEVICES
+   ==============================================================================
+
+   USED BY   document.body (add the class yourself, e.g. from a settings toggle)
+
+   Add class="skin-reduce-fx" to <body> to turn off the pricey-looking effects at once: the
+   account page gradient, translucent cards, and scroll-reveal animation. Imported LAST so it
+   wins over every other rule.
+   ============================================================================== */
+
+.skin-reduce-fx .skin-glass-stage { background: var(--stage-ivory); }
+.skin-reduce-fx .skin-glass-card  { background: #ffffff; box-shadow: none; }
+.skin-reduce-fx .reveal           { animation: none !important; }

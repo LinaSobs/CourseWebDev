@@ -1,0 +1,16 @@
+/* ==============================================================================
+   HOME PAGE
+   ==============================================================================
+
+   USED BY   pages/Home/ (Home, Hero, Chooser, KidsBanner, Marquee, Perks, FeatureBook, Watch, Newsletter, Contact)
+
+   Most of the home page is built from Tailwind utility classes in the JSX. Only the few things
+   that utilities cannot express live here.
+
+   CLASS INDEX
+     .kids-pick   a Kids Corner pick tilted by --rot (set from JSX so every card leans differently)
+   ============================================================================== */
+
+@layer components {
+  .kids-pick { transform: rotate(var(--rot, 0deg)); }
+}

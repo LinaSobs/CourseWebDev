@@ -1,0 +1,46 @@
+/* ==============================================================================
+   ACCESSIBILITY (user preference media queries)
+   ==============================================================================
+
+   USED BY   every page
+
+   Switches that follow the visitor's device settings. Account-only versions of these rules sit
+   in pages/Account/Account.css, next to the classes they affect.
+
+   CLASS INDEX
+     prefers-reduced-motion   near-zero animation time, no smooth scroll, no reveal (the chat button is exempt)
+     prefers-contrast: more   darker edges and focus rings, thicker outlines
+     forced-colors (Windows high contrast)   real borders instead of colour-only cues
+   ============================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *:not(.fab-away), *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { animation: none !important; }
+  dialog.drawer[open], dialog.popup[open], dialog[open]::backdrop { animation: none !important; }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --skin-edge: #5f8aad;
+    --skin-input-border: #1a2e4a;
+    --skin-focus: #003a66;
+    --skin-backdrop: rgba(26,46,74,0.7);
+    --skin-shadow: 0 8px 24px rgba(26,46,74,0.20);
+    --skin-strength-1: #7a1418;
+    --skin-strength-2: #7a1418;
+    --skin-strength-3: #7a3300;
+    --skin-strength-4: #0a4a29;
+  }
+  :focus-visible { outline-width: 4px; }
+  .skin-btn:focus-visible { outline-width: 4px; }
+  .skin-input:focus { box-shadow: 0 0 0 4px var(--skin-focus); }
+}
+
+@media (forced-colors: active) {
+  .skin-card, .skin-input { border: 2px solid CanvasText; }
+}

@@ -1,0 +1,20 @@
+/* ==============================================================================
+   MOTION LAB PAGE (#/motion-lab)
+   ==============================================================================
+
+   USED BY   pages/MotionLab/MotionLab.jsx
+
+   The page where the book animation's maths can be scrubbed and checked. It sits on a MathPlane
+   (shared/MathPlane), so the stage has to leave room for the axes.
+
+   CLASS INDEX
+     .motion-stage       padding so content clears the y axis and sits on the x axis
+     .motion-hop-label   label that rides at the hop height
+     .motion-hop-line    line that marks the hop height
+   ============================================================================== */
+
+@layer components {
+  .motion-stage     { padding-left: calc(var(--ox, 0px) + 56px); padding-bottom: var(--oy, 0px); padding-top: 24px; }
+  .motion-hop-label { bottom: calc(var(--oy, 0px) + var(--hop, 0px) + 4px); }
+  .motion-hop-line  { bottom: calc(var(--oy, 0px) + var(--hop, 0px)); }
+}

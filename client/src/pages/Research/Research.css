@@ -1,0 +1,202 @@
+/* ==============================================================================
+   RESEARCH & BOOK PAGE
+   ==============================================================================
+
+   USED BY   pages/Research/ (ResearchPage, cards, Modal, OrderModal, SearchModal)
+
+   The page is laid out in three steps, top to bottom:
+     1. Hero            (shared/PageHero)
+     2. Group tabs      three big tabs in the middle of the page: News, Papers, Books
+     3. Open panel      only the chosen group is shown; papers and books are split
+                        into Beginner / Intermediate / Advanced groups
+
+   CLASS INDEX
+     .rs-tabs         the row of three group tabs (one column on phones, three on tablets and up)
+     .rs-tab          one tab. It is a link (the address bar holds ?section=), so Back works.
+       __icon         round icon bubble
+       __title        group name
+       __note         one short line about the group
+       [aria-current="page"]  the open tab: filled blue, with a small pointer toward the panel
+     .rs-group-head   heading strip above a group of cards ("Beginner  4  Start here...").
+                      data-level="beginner|intermediate|advanced" picks the colour bar on the left.
+     .rs-paper        a research-paper card. data-level picks the colour of its top bar (mint / sun / coral).
+       __bar          the 6px colour bar along the top edge
+     .rs-featured     the big Featured paper card above the list (.rs-featured__stage = its left side, .rs-sheet = the drawn PDF page)
+     .rb-lazy         a card that is only drawn when near the screen (content-visibility: auto, with a
+                      guessed height so the scrollbar does not jump). data-pinned turns it off for the
+                      one you jumped to by a link.
+     .rb-dialog       dimmed backdrop of the research dialogs, same colour as the cart drawer
+     body.modal-open  set by Modal.jsx while any research dialog is open, locks the page behind it
+   ============================================================================== */
+
+@layer components {
+  /* ---- 2. Group tabs ------------------------------------------------------ */
+  .rs-tabs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+  @media (min-width: 768px) {
+    .rs-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  }
+
+  .rs-tab {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+    padding: 1.25rem 1rem 1.4rem;
+    text-align: center;
+    color: var(--skin-ink);
+    background: var(--skin-surface);
+    border: 2px solid var(--skin-edge);
+    border-radius: var(--skin-radius);
+    box-shadow: var(--skin-shadow);
+    transition: transform calc(180ms * var(--dur-scale)) var(--soft-ease-out), border-color calc(180ms * var(--dur-scale)) var(--soft-ease), background-color calc(180ms * var(--dur-scale)) var(--soft-ease);
+  }
+  .rs-tab:hover { transform: translateY(-3px); border-color: var(--skin-accent); }
+
+  .rs-tab__icon {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-bottom: 0.25rem;
+    border-radius: 9999px;
+    background: var(--color-ink-soft);
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .rs-tab__title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  .rs-tab__note { font-size: 0.9375rem; line-height: 1.35; color: var(--skin-muted); }
+
+  /* the open tab: filled with the link blue (white text on it passes AA contrast) */
+  .rs-tab[aria-current="page"] {
+    transform: none;
+    color: #ffffff;
+    background: var(--skin-link);
+    border-color: var(--skin-link);
+  }
+  .rs-tab[aria-current="page"] .rs-tab__icon { background: rgba(255, 255, 255, 0.22); }
+  .rs-tab[aria-current="page"] .rs-tab__note { color: rgba(255, 255, 255, 0.92); }
+
+  /* a small pointer under the open tab, aiming at the panel (tablet and up) */
+  @media (min-width: 768px) {
+    .rs-tab[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -11px;
+      width: 20px;
+      height: 20px;
+      background: var(--skin-link);
+      border-radius: 3px;
+      transform: translateX(-50%) rotate(45deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rs-tab { transition: none; }
+    .rs-tab:hover { transform: none; }
+  }
+
+  /* ---- 3. Group headings inside the open panel ---------------------------- */
+  .rs-group-head {
+    --rs-accent: var(--skin-accent);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-left: 0.9rem;
+    border-left: 6px solid var(--rs-accent);
+  }
+  .rs-group-head > p { flex-basis: 100%; }
+  .rs-group-head[data-level="beginner"]     { --rs-accent: var(--color-mint); }
+  .rs-group-head[data-level="intermediate"] { --rs-accent: var(--color-sun); }
+  .rs-group-head[data-level="advanced"]     { --rs-accent: var(--color-coral); }
+}
+
+@layer components {
+  /* ---- Paper cards: a colour bar along the top shows the level at a glance ----- */
+  .rs-paper { --rs-accent: var(--skin-accent); }
+  .rs-paper[data-level="beginner"]     { --rs-accent: var(--color-mint); }
+  .rs-paper[data-level="intermediate"] { --rs-accent: var(--color-sun); }
+  .rs-paper[data-level="advanced"]     { --rs-accent: var(--color-coral); }
+  .rs-paper__bar { display: block; height: 6px; background: var(--rs-accent); }
+
+  /* ---- Featured paper: a drawn PDF page on a soft stage ----------------------- */
+  .rs-featured { border-top: 6px solid var(--rs-accent); }
+  .rs-featured__stage {
+    display: grid;
+    place-items: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, var(--color-ink-soft), var(--color-paper) 55%, color-mix(in oklch, var(--color-coral) 30%, transparent));
+  }
+  .rs-sheet {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.45rem;
+    width: min(15rem, 70%);
+    aspect-ratio: 3 / 4;
+    padding: 1.4rem 1.2rem;
+    border-radius: 0.9rem;
+    background: #ffffff;
+    box-shadow: 0 22px 44px -16px rgba(18, 38, 63, 0.35), 0 0 0 1px var(--skin-edge);
+    transform: rotate(-3deg);
+    transition: transform calc(400ms * var(--dur-scale)) var(--soft-ease-out);
+  }
+  .rs-featured:hover .rs-sheet { transform: rotate(0deg) translateY(-4px); }
+  .rs-sheet__title { display: block; height: 0.7rem; border-radius: 9999px; background: #1a2e4a; opacity: 0.85; }
+  .rs-sheet__lines {
+    display: block;
+    height: 11rem;
+    margin-top: 0.8rem;
+    border-radius: 0.25rem;
+    background: repeating-linear-gradient(to bottom, rgba(26, 46, 74, 0.16) 0 0.32rem, transparent 0.32rem 0.72rem);
+  }
+  .rs-sheet__stamp {
+    position: absolute;
+    right: -0.7rem;
+    bottom: 1.1rem;
+    padding: 0.2rem 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--color-coral);
+    color: #1a2e4a;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    transform: rotate(6deg);
+    box-shadow: 0 6px 14px -6px rgba(18, 38, 63, 0.4);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rs-sheet { transition: none; }
+    .rs-featured:hover .rs-sheet { transform: rotate(-3deg); }
+  }
+}
+
+@media (forced-colors: active) {
+  .rs-paper__bar { background: CanvasText; }
+  .rs-tab { border: 2px solid CanvasText; }
+  .rs-tab[aria-current="page"] { border-width: 4px; forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .rs-group-head { border-left-color: CanvasText; }
+}
+
+/* ---- Cards and dialogs (unlayered on purpose, as before) -------------------- */
+.rb-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+  scroll-margin-top: calc(env(safe-area-inset-top, 0px) + var(--header-h) + 1rem);
+}
+.rb-lazy[data-pinned] { content-visibility: visible; }
+.rb-dialog { background: var(--skin-backdrop); }
+
+body.modal-open { overflow: hidden; }

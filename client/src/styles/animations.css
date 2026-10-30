@@ -1,0 +1,46 @@
+/* ==============================================================================
+   KEYFRAMES
+   ==============================================================================
+
+   USED BY   referenced by the --animate-* shortcuts in tokens.css (animate-float, animate-bob, animate-marquee-slow, ...)
+
+   Every keyframe only changes transform and/or opacity, so the browser can run them on the
+   GPU without re-painting the page. Several read CSS variables (--x, --y, --s, --r, --tilt,
+   --spin) so one keyframe can serve many differently-placed elements.
+
+   CLASS INDEX
+     float     slow drift up/down with a small turn (hero cover fan)
+     bob       gentle bob + tilt (Decor blobs on shelf pages)
+     sway      small side-to-side tilt
+     marquee   slides the book strip left by exactly half (home marquee)
+     twinkle   sparkle fade + scale (Decor stars)
+     bump      cart badge bounce when the count changes
+     pop       wishlist heart pop
+     rise-in   toast slides up
+     page-in   whole page fades up on arrival
+     hop       little hop (empty cart icon, loading books)
+     flyout-in / flyout-out / flyout-item   the section drop-down under a shelf tab (opens, closes, items slide in)
+   ============================================================================== */
+
+@keyframes float {
+  from { transform: translate3d(calc(var(--x, 0px) * var(--s, 1)), 0, 0) rotate(var(--r, 0deg)); }
+  to   { transform: translate3d(calc(var(--x, 0px) * var(--s, 1)), calc(var(--y, -16px) * var(--s, 1)), 0) rotate(calc(var(--r, 0deg) + var(--spin, 3deg))); }
+}
+@keyframes bob {
+  from { transform: translate3d(0, 0, 0) rotate(var(--tilt, 0deg)); }
+  to   { transform: translate3d(0, calc(var(--y, -14px) * var(--s, 1)), 0) rotate(calc(var(--tilt, 0deg) + var(--spin, 4deg))); }
+}
+@keyframes sway {
+  from { transform: translate3d(0, 0, 0) rotate(calc(var(--tilt, -3deg))); }
+  to   { transform: translate3d(0, calc(var(--y, -6px) * var(--s, 1)), 0) rotate(calc(var(--tilt, -3deg) * -1)); }
+}
+@keyframes marquee  { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+@keyframes twinkle  { from { opacity: .15; transform: scale3d(.7,.7,1); } to { opacity: 1; transform: scale3d(1.1,1.1,1); } }
+@keyframes bump     { 0% { transform: scale3d(1,1,1) rotate(0); } 40% { transform: scale3d(1.6,1.6,1) rotate(-8deg); } 100% { transform: scale3d(1,1,1) rotate(0); } }
+@keyframes pop      { 0% { transform: scale3d(.85,.85,1); } 55% { transform: scale3d(1.18,1.18,1); } 100% { transform: scale3d(1,1,1); } }
+@keyframes rise-in  { from { opacity: 0; transform: translate3d(0,14px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
+@keyframes page-in  { from { opacity: 0; transform: translate3d(0,10px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
+@keyframes hop      { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-16px,0); } }
+@keyframes flyout-in   { from { opacity: 0; transform: translate3d(0,-10px,0) scale3d(.92,.86,1); } to { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); } }
+@keyframes flyout-out  { from { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); } to { opacity: 0; transform: translate3d(0,-8px,0) scale3d(.96,.92,1); } }
+@keyframes flyout-item { from { opacity: 0; transform: translate3d(-10px,0,0); } to { opacity: 1; transform: translate3d(0,0,0); } }

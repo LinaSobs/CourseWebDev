@@ -1,0 +1,21 @@
+/* ==============================================================================
+   PAGE HERO
+   ==============================================================================
+
+   USED BY   shared/PageHero/PageHero.jsx (used by pages/Home Hero, pages/Shelf AudienceHero, pages/Research)
+
+   The top banner of a page: headline text on the left, a fan of floating book covers on the right,
+   optional background video behind (shared/BackgroundVideo.jsx).
+
+   CLASS INDEX
+     .fan-cover   one cover in the fan. JSX sets --x (sideways shift), --r (turn), --z (stacking) and
+                   --delay (when its float animation starts) so each cover sits and moves differently.
+   ============================================================================== */
+
+@layer components {
+  .fan-cover {
+    transform: translateX(calc(var(--x, 0px) * var(--s, 1))) rotate(var(--r, 0deg));
+    z-index: var(--z, auto);
+    animation-delay: var(--delay, 0s);
+  }
+}

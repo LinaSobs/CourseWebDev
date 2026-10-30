@@ -1,0 +1,110 @@
+/* ==============================================================================
+   UI KIT: skin cards, buttons and inputs
+   ==============================================================================
+
+   USED BY   every page (BookCard, forms, cart, dialogs, account, research, ...)
+
+   The reusable "skin" pieces. They only read --skin-* variables, so they automatically wear
+   the colours of the shelf the visitor is on.
+
+   CLASS INDEX
+     Cards     .skin-card  .skin-card--flat
+     Buttons   .skin-btn (blue)  .skin-btn-pop (coral)  .skin-btn-soft (white, turns sun-yellow on hover)
+     Inputs    .skin-input
+   ============================================================================== */
+
+@layer components {
+  /* Card: white surface, soft edge, rounded. --flat removes the shadow. data-strong-border makes the edge darker. */
+  .skin-card {
+    background: var(--skin-surface);
+    color: var(--skin-ink);
+    border: var(--skin-bw) solid var(--skin-edge);
+    border-radius: var(--skin-radius);
+    box-shadow: var(--skin-shadow);
+  }
+  .skin-card--flat { box-shadow: none; }
+  .skin-card[data-strong-border] { border-color: var(--skin-input-border); }
+
+  /* Primary button (blue). Lifts 1.5px on hover, presses down on click. Disabled looks flat and grey. */
+  .skin-btn {
+    background: var(--skin-accent);
+    color: var(--skin-accent-ink);
+    border-radius: var(--skin-btn-radius);
+    box-shadow: var(--skin-btn-shadow);
+    transition: transform calc(180ms * var(--dur-scale)) var(--soft-ease), background-color calc(180ms * var(--dur-scale)) var(--soft-ease);
+  }
+  .skin-btn:hover:not(:disabled) {
+    transform: translateY(-1.5px);
+    background: color-mix(in oklch, var(--skin-accent) 92%, white);
+  }
+  .skin-btn:active:not(:disabled) {
+    transform: translateY(0.5px);
+    background: color-mix(in oklch, var(--skin-accent) 88%, black);
+  }
+  .skin-btn:disabled, .skin-btn[aria-disabled="true"] {
+    background: var(--skin-disabled-bg);
+    color: var(--skin-disabled-ink);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+  }
+  .skin-btn:focus-visible {
+    outline: 3px solid color-mix(in oklch, var(--skin-focus) 62%, transparent);
+    outline-offset: 3px;
+  }
+
+  /* Coral variant: same shape, different colours. */
+  .skin-btn-pop {
+    background: var(--skin-pop);
+    color: var(--skin-pop-ink);
+    box-shadow: var(--skin-btn-pop-shadow);
+  }
+  .skin-btn-pop:hover:not(:disabled) { background: color-mix(in oklch, var(--skin-pop) 92%, white); }
+  .skin-btn-pop:active:not(:disabled) { background: color-mix(in oklch, var(--skin-pop) 88%, black); }
+
+  /* Soft variant: white with an edge, for secondary actions. */
+  .skin-btn-soft {
+    background: var(--skin-surface);
+    color: var(--skin-ink);
+    border: 1px solid var(--skin-edge);
+    box-shadow: none;
+  }
+  .skin-btn-soft:hover:not(:disabled) { background: var(--color-sun); }
+  .skin-btn-soft:active:not(:disabled) {
+    background: color-mix(in oklch, var(--color-sun) 85%, black);
+  }
+  .skin-btn-soft:focus-visible {
+    outline: 3px solid var(--skin-focus);
+    outline-offset: 3px;
+  }
+
+  /* Text input: soft ring on focus, greyed when disabled. */
+  .skin-input {
+    background: var(--skin-input-bg);
+    color: var(--skin-ink);
+    border: 2px solid color-mix(in oklch, var(--skin-input-border) 80%, white);
+    border-radius: var(--skin-input-radius);
+    transition: border-color calc(180ms * var(--dur-scale)) var(--soft-ease), box-shadow calc(180ms * var(--dur-scale)) var(--soft-ease);
+  }
+  .skin-input::placeholder {
+    color: color-mix(in oklch, var(--skin-muted) 86%, white);
+    opacity: 1;
+  }
+  .skin-input:focus, .skin-input:focus-within {
+    outline: none;
+    border-color: var(--skin-focus);
+    box-shadow: 0 0 0 4px var(--soft-ring);
+  }
+  .skin-input:disabled {
+    background: var(--skin-disabled-bg);
+    color: var(--skin-disabled-ink);
+    cursor: not-allowed;
+  }
+
+  /* People who asked their device for less motion get no hover lift or colour transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    .skin-btn, .skin-input { transition: none; }
+    .skin-btn:hover:not(:disabled), .skin-btn:active:not(:disabled) { transform: none; }
+  }
+}

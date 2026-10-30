@@ -1,0 +1,59 @@
+/* ==============================================================================
+   PURCHASED BOOK (the hop + flip + colour-wash cover)
+   ==============================================================================
+
+   USED BY   shared/PurchasedBook/PurchasedBook.jsx (cart "thank you", owned books on shelves, Motion Lab, My account)
+
+   A book cover that hops, flips round to show a "Yours!" back, and washes through a colour.
+   The numbers come from lib/bookMotion.js; JSX writes three CSS variables every frame:
+       --bm-hue      colour of the wash (degrees round the colour wheel)
+       --bm-a        strength of the wash, 0 to 1
+       --bm-shadow   floor shadow size, 1 on the floor, smaller while the book is in the air
+   and a transform on .bm-card for the hop and the turn.
+
+   CLASS INDEX
+     .bm         the 3D stage (perspective) and the clickable button/div
+     .bm--loop   modifier for book lists: no big glow, because a shadow that changes every frame repaints a large area
+     .bm-card    the part that moves and turns
+     .bm-face    front and back faces, hidden when turned away
+     .bm-back    the "Yours!" side
+     .bm-tint    colour wash over the front
+     .bm-shadow  floor shadow (a gradient, not a blur filter: much cheaper)
+   ============================================================================== */
+
+@layer components {
+  .bm { --bm-hue: 200; --bm-a: 0; --bm-shadow: 1; position: relative; display: block; perspective: 700px; cursor: pointer; text-align: left; border-radius: 0.5rem; }
+  .bm:focus-visible { outline: 3px solid var(--skin-focus); outline-offset: 4px; }
+  .bm-card {
+    position: relative;
+    transform-style: preserve-3d;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 calc(var(--bm-a) * 30px) calc(var(--bm-a) * 6px) hsl(var(--bm-hue) 95% 58% / var(--bm-a));
+  }
+  /* book lists: the colour wash is the .bm-tint layer only. A 30px box-shadow that changes every frame forces a repaint of a big area per book. */
+  .bm--loop .bm-card { box-shadow: none; }
+  .bm-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .bm-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transform: rotateY(180deg);
+    background: hsl(var(--bm-hue) 90% 72%);
+  }
+  .bm-tint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: hsl(var(--bm-hue) 95% 58% / var(--bm-a));
+  }
+  .bm-shadow {
+    position: absolute;
+    left: 8%; right: 8%; bottom: -7px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(20,18,43,0.38) 0%, rgba(20,18,43,0.18) 55%, rgba(20,18,43,0) 72%);
+    opacity: var(--bm-shadow);
+    transform: scaleX(var(--bm-shadow));
+  }
+}

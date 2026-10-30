@@ -1,0 +1,15 @@
+/* ==============================================================================
+   SHELF PAGES (Kids, Teens, Students, ...)
+   ==============================================================================
+
+   USED BY   pages/Shelf/ (AudiencePage, Shelf, BookCard, Decor, ...)
+
+   One page layout shared by every reader group; the colours come from the skin.
+
+   CLASS INDEX
+     .sparkle   a Decor star; JSX sets --delay so the stars do not twinkle in step
+   ============================================================================== */
+
+@layer components {
+  .sparkle   { animation-delay: var(--delay, 0s); }
+}

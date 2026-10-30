@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="Quantum Questions by J. Moreno">
+<rect width="600" height="800" fill="#0f6dbb"/>
+<rect x="8" y="8" width="584" height="784" fill="none" stroke="#12263f" stroke-width="16"/>
+<text x="40" y="150" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">QUANTUM</text><text x="40" y="250" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="74" fill="#12263f">QUESTIONS</text>
+<ellipse cx="300" cy="620" rx="84.0" ry="60" fill="none" stroke="#12263f" stroke-width="6"/><ellipse cx="300" cy="620" rx="168.0" ry="120" fill="none" stroke="#12263f" stroke-width="6"/><ellipse cx="300" cy="620" rx="251.99999999999997" ry="180" fill="none" stroke="#12263f" stroke-width="6"/><circle cx="300" cy="620" r="26" fill="#12263f"/><circle cx="426" cy="620" r="16" fill="#f2f9ff" stroke="#12263f" stroke-width="5"/>
+<rect x="8" y="744" width="584" height="48" fill="#12263f"/>
+<text x="40" y="777" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#f2f9ff">J. MORENO</text>
+<text x="560" y="777" text-anchor="end" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#bfe4ff">ADVANCED</text>
+</svg>

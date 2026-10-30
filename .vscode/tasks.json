@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "server: install", "type": "shell", "command": "npm install", "options": { "cwd": "${workspaceFolder}/server" }, "problemMatcher": [] },
+    { "label": "client: install", "type": "shell", "command": "npm install", "options": { "cwd": "${workspaceFolder}/client" }, "problemMatcher": [] },
+    { "label": "server: dev", "type": "shell", "command": "npm run dev", "options": { "cwd": "${workspaceFolder}/server" }, "isBackground": true, "problemMatcher": [] },
+    { "label": "client: dev", "type": "shell", "command": "npm run dev", "options": { "cwd": "${workspaceFolder}/client" }, "isBackground": true, "problemMatcher": [] },
+    { "label": "db: setup (tables + books)", "type": "shell", "command": "npm run db:setup", "options": { "cwd": "${workspaceFolder}/server" }, "problemMatcher": [] },
+    { "label": "Run everything (server + client)", "dependsOn": ["server: dev", "client: dev"], "problemMatcher": [] }
+  ]
+}

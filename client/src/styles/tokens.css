@@ -1,0 +1,158 @@
+/* ==============================================================================
+   DESIGN TOKENS
+   ==============================================================================
+
+   USED BY   every page (Tailwind turns the @theme values into utility classes like bg-ink, text-blue, font-display)
+
+   The single place for colours, fonts, easing curves and the "skin" variables.
+
+   Two layers of colour:
+     1. Brand colours   (--color-*)  fixed, the same on every page.
+     2. Skin colours    (--skin-*)   the colours of the shelf you are on. A page wrapper can
+                         redefine them (see data-skin in App.jsx) and every card, button and
+                         input follows, because they only read var(--skin-*).
+
+   Rules of the house: no backdrop-filter, no filter: blur, no content-visibility. Everything
+   that animates uses transform / opacity so it stays on the GPU and the page stays smooth.
+
+   CLASS INDEX
+     @theme            brand colours, fonts, easing curves, --animate-* shortcuts
+     @theme inline     --skin-* mapped to Tailwind colour names (bg-skin-bg, text-skin-ink, ...)
+     :root             default values of every --skin-* variable
+     @custom-variant   short-landscape (phones held sideways)
+   ============================================================================== */
+
+/* ---- 1. BRAND TOKENS (Tailwind @theme) --------------------------------------- */
+@theme {
+  --color-ink:      #1a2e4a;
+  --color-ink-soft: #e3f2ff;
+  --color-paper:    #f5faff;
+  --color-blue:     #3b8ed6;
+  --color-coral:    #ff9d94;
+  --color-sun:      #ffd782;
+  --color-mint:     #9be5c8;
+  --color-lavender: #c4b5fd;
+  --color-muted:    #5a7490;
+  --color-line:     #d6e6f5;
+
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body:    "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --motion-base:  4s;
+  /* tab/page transitions that use no duration class take this long (Tailwind's default is 150ms) */
+  --default-transition-duration: calc(150ms * var(--dur-scale));
+  --ease-smooth:  cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-soft:  cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-float:        float calc(6s * var(--dur-scale)) var(--ease-smooth) infinite alternate both;
+  --animate-marquee-slow: marquee 80s linear infinite both;
+  --animate-sway:         sway calc(7s * var(--dur-scale)) var(--ease-smooth) infinite alternate both;
+  --animate-bob:          bob calc(4s * var(--dur-scale)) var(--ease-smooth) infinite alternate both;
+  --animate-twinkle:      twinkle calc(2.5s * var(--dur-scale)) var(--ease-smooth) infinite alternate both;
+  --animate-bump:         bump calc(0.45s * var(--dur-scale)) var(--ease-spring) both;
+  --animate-pop:          pop calc(0.4s * var(--dur-scale)) var(--ease-spring) both;
+  --animate-rise-in:      rise-in calc(0.35s * var(--dur-scale)) var(--ease-out-soft) both;
+  --animate-page:         page-in calc(0.5s * var(--dur-scale)) var(--ease-out-soft) both;
+  --animate-hop:          hop calc(0.9s * var(--dur-scale)) var(--ease-smooth) infinite both;
+}
+
+/* ---- 2. SKIN TOKENS: names for Tailwind -------------------------------------- */
+/*    'inline' means Tailwind writes var(--skin-x) into the utility instead of a fixed value, */
+/*    so a page that redefines --skin-x changes every bg-skin-x / text-skin-x below it. */
+@theme inline {
+  --color-skin-bg:       var(--skin-bg);
+  --color-skin-surface:  var(--skin-surface);
+  --color-skin-ink:      var(--skin-ink);
+  --color-skin-muted:    var(--skin-muted);
+  --color-skin-line:     var(--skin-line);
+  --color-skin-edge:     var(--skin-edge);
+  --color-skin-accent:   var(--skin-accent);
+  --color-skin-pop:      var(--skin-pop);
+  --color-skin-pop-ink:  var(--skin-pop-ink);
+  --color-skin-link:     var(--skin-link);
+  --color-skin-danger:   var(--skin-danger);
+  --color-skin-deep:     var(--skin-deep);
+  --color-skin-deep-ink: var(--skin-deep-ink);
+  --color-skin-deep-muted: var(--skin-deep-muted);
+  --color-skin-deep-soft:  var(--skin-deep-soft);
+  --color-skin-deep-line:  var(--skin-deep-line);
+  --color-skin-deep-pop:   var(--skin-deep-pop);
+  --color-skin-foot:       var(--skin-foot);
+  --color-skin-foot-ink:   var(--skin-foot-ink);
+  --color-skin-foot-pop:   var(--skin-foot-pop);
+  --font-skin:   var(--skin-font);
+  --radius-skin: var(--skin-radius);
+  --shadow-skin: var(--skin-shadow);
+}
+
+/* ---- 3. SKIN TOKENS: default values (the calm blue 'home' skin) ------------- */
+/*    Account-only colours (--stage-*) live in pages/Account/Account.css. */
+:root {
+  /* SPEED DIAL for the whole site: every transition and animation duration is multiplied by this.
+     1 = the old speed, 1.75 = calmer (the page takes its time instead of snapping and stuttering), 2.5 = very slow. */
+  --dur-scale: 1.75;
+
+  --skin-bg:      #f5faff;
+  --skin-surface: #ffffff;
+  --skin-line:    #d6e6f5;
+  --skin-edge:    #e5eff9;
+
+  --skin-ink:     #1a2e4a;
+  --skin-muted:   #5a7490;
+
+  --skin-accent:     #3b8ed6;
+  --skin-accent-ink: #ffffff;
+  --skin-pop:        #ffb3a7;
+  --skin-pop-ink:    #7c3a34;
+  --skin-link:       #2563a8;
+  --skin-danger:     #c94a52;
+
+  --skin-deep:        #eaf4ff;
+  --skin-deep-ink:    #1a2e4a;
+  --skin-deep-muted:  #5a7490;
+  --skin-deep-soft:   rgba(59,142,214,0.06);
+  --skin-deep-line:   rgba(59,142,214,0.14);
+  --skin-deep-pop:    #3b8ed6;
+
+  --skin-foot:     #e8f2fc;
+  --skin-foot-ink: #33506b;
+  --skin-foot-pop: #3b8ed6;
+
+  --skin-font:   var(--font-display);
+  --skin-radius: 24px;
+  --skin-bw:     1px;
+  --skin-shadow:
+    0 1px 2px rgba(26,46,74,0.04),
+    0 10px 26px -14px rgba(26,46,74,0.12);
+
+  --skin-btn-radius: 9999px;
+  --skin-btn-shadow: 0 6px 18px -6px rgba(59,142,214,0.42);
+  --skin-btn-pop-shadow: 0 6px 18px -6px rgba(255,157,148,0.50);
+
+  --skin-input-bg:     #f8fbff;
+  --skin-input-radius: 18px;
+  --skin-input-border: #7d9db8;
+  --skin-focus:        #2f74a8;
+  --skin-backdrop:     rgba(26,46,74,0.38);
+
+  --skin-disabled-bg:  #e4edf6;
+  --skin-disabled-ink: #8a9fb3;
+
+  --skin-strength-1: #d1575d;
+  --skin-strength-2: #d1575d;
+  --skin-strength-3: #d99a2b;
+  --skin-strength-4: #3a9a68;
+
+  --soft-ease:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --soft-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --soft-ring:     rgba(47,116,168,0.20);
+}
+
+/* ---- 4. CUSTOM VARIANTS ------------------------------------------------------ */
+/*    Use as  short-landscape:hidden  etc. in JSX class names. */
+/*    dark:  use as  dark:bg-[#0f2036]  for a colour that must change in the Night theme (see styles/theme-night.css). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant short-landscape (@media (orientation: landscape) and (max-height: 520px));

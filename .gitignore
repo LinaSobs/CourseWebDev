@@ -1,0 +1,13 @@
+# dependencies and build output
+node_modules
+dist
+
+# SECRETS: never commit these. Use server/.env.example as the template.
+.env
+.env.*
+!.env.example
+
+# OS / editor noise and stray copies
+.DS_Store
+*.local
+* copy

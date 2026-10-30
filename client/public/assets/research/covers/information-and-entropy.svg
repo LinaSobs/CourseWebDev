@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="Info And Entropy by K. Tanaka">
+<rect width="600" height="800" fill="#0f6dbb"/>
+<rect x="8" y="8" width="584" height="784" fill="none" stroke="#12263f" stroke-width="16"/>
+<text x="40" y="150" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">INFO</text><text x="40" y="250" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">AND</text><text x="40" y="350" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">ENTROPY</text>
+<path d="M40 740 C 150 420, 450 420, 560 740" fill="none" stroke="#12263f" stroke-width="10"/><line x1="300" y1="470" x2="300" y2="740" stroke="#12263f" stroke-width="5" stroke-dasharray="14 10"/>
+<rect x="8" y="744" width="584" height="48" fill="#12263f"/>
+<text x="40" y="777" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#f2f9ff">K. TANAKA</text>
+<text x="560" y="777" text-anchor="end" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#bfe4ff">INTERMEDIATE</text>
+</svg>

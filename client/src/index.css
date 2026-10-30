@@ -1,0 +1,55 @@
+/* ==============================================================================
+   GLOBALBOOKS: STYLE ENTRY POINT
+   ==============================================================================
+   This file only lists the other stylesheets. Each one has its own header that says
+   what it is for and which components use it, and CSS for a page sits NEXT TO that
+   page's JSX (src/pages/<Page>/<Page>.css).
+
+   WHY @import HERE AND NOT import './x.css' IN EACH JSX FILE?
+   Tailwind v4 reads @theme / @custom-variant and the cascade-layer order from the
+   file that imports it. Listing everything here keeps one fixed order, in one place.
+
+   THEMES: light is the default (tokens.css). Night is a set of overrides under html[data-theme="dark"] in styles/theme-night.css.
+
+   ORDER MATTERS (later wins when two rules have the same weight):
+     1. Tailwind itself
+     2. global styles   (tokens, base, ui-kit, dialogs, type, controls, scroll)
+     3. shared parts    (used by more than one page)
+     4. app shell       (header)
+     5. pages           (one per page)
+     6. accessibility + kill switch (always last, so they can override anything)
+   ============================================================================== */
+
+@import "tailwindcss";
+
+/* 2. global styles ---------------------------------------------------------- */
+@import "./styles/tokens.css";          /* colours, fonts, easing, skin variables */
+@import "./styles/animations.css";      /* keyframes (transform / opacity only) */
+@import "./styles/base.css";            /* html, body, focus ring, gutters */
+@import "./styles/ui-kit.css";          /* .skin-card  .skin-btn*  .skin-input */
+@import "./styles/dialogs.css";         /* dialog.drawer  dialog.popup  ::backdrop */
+@import "./styles/typography.css";      /* .t-display .t-section .t-title ... */
+@import "./styles/controls.css";        /* .btn .chip .badge .card-lift */
+@import "./styles/scroll-effects.css";  /* .reveal  .fab-away  (scroll-driven) */
+
+/* 3. shared parts ----------------------------------------------------------- */
+@import "./shared/PageHero/PageHero.css";
+@import "./shared/PurchasedBook/PurchasedBook.css";
+@import "./shared/MathPlane/MathPlane.css";
+
+/* 4. app shell -------------------------------------------------------------- */
+@import "./layout/Header/Header.css";
+
+/* 5. pages ------------------------------------------------------------------ */
+@import "./pages/Home/Home.css";
+@import "./pages/Shelf/Shelf.css";
+@import "./pages/Account/Account.css";
+@import "./pages/Research/Research.css";
+@import "./pages/MotionLab/MotionLab.css";
+
+/* 5b. the Night theme (colour overrides for every page, keep after the pages) */
+@import "./styles/theme-night.css";
+
+/* 6. accessibility + kill switch (keep last) ------------------------------- */
+@import "./styles/accessibility.css";
+@import "./styles/kill-switch.css";

@@ -1,0 +1,32 @@
+# Test the API without leaving VS Code. Install the "REST Client" extension, then click "Send Request" above a request.
+@host = http://localhost:4000
+
+### health: is the server + database alive?
+GET {{host}}/api/health
+
+### all reader groups
+GET {{host}}/api/groups
+
+### all books
+GET {{host}}/api/books
+
+### filtered: kids' books under $12.50, cheapest first
+GET {{host}}/api/books?group=kids&max=12.5&sort=price_asc
+
+### Kids Corner: bedtime books for ages 3 to 5
+GET {{host}}/api/books?group=kids&category=bedtime&ageFrom=3&ageTo=5
+
+### search
+GET {{host}}/api/books?q=moon
+
+### one book
+GET {{host}}/api/books/moon-bakery
+
+### protected route WITHOUT login -> must answer 401
+GET {{host}}/api/cart
+
+### newsletter
+POST {{host}}/api/newsletter
+Content-Type: application/json
+
+{ "email": "test@example.com" }

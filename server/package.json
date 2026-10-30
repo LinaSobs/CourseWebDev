@@ -1,0 +1,26 @@
+{
+  "name": "globalbooks-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "dev": "node --watch --env-file=.env src/index.js",
+    "start": "node src/index.js",
+    "db:migrate": "node --env-file=.env scripts/migrate.js",
+    "db:seed": "node --env-file=.env scripts/seed.js",
+    "db:import-research": "node --env-file=.env scripts/import-research.js",
+    "db:seed-research": "node --env-file=.env scripts/seed-research.js",
+    "db:setup": "npm run db:migrate && npm run db:seed && npm run db:seed-research"
+  },
+  "dependencies": {
+    "better-auth": "^1.3.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "pg": "^8.13.0",
+    "stripe": "^23.1.0"
+  }
+}

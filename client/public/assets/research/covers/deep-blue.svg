@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="Deep Blue by S. Lindqvist">
+<rect width="600" height="800" fill="#0f6dbb"/>
+<rect x="8" y="8" width="584" height="784" fill="none" stroke="#12263f" stroke-width="16"/>
+<text x="40" y="150" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">DEEP</text><text x="40" y="250" font-family="Arial Black, Archivo Black, Impact, sans-serif" font-weight="900" font-size="96" fill="#12263f">BLUE</text>
+<path d="M0 470 Q75 430 150 470 T300 470 T450 470 T600 470" fill="none" stroke="#12263f" stroke-width="7"/><path d="M0 496 Q75 456 150 496 T300 496 T450 496 T600 496" fill="none" stroke="#12263f" stroke-width="7"/><path d="M0 522 Q75 482 150 522 T300 522 T450 522 T600 522" fill="none" stroke="#12263f" stroke-width="7"/><path d="M0 548 Q75 508 150 548 T300 548 T450 548 T600 548" fill="none" stroke="#12263f" stroke-width="7"/><path d="M0 574 Q75 534 150 574 T300 574 T450 574 T600 574" fill="none" stroke="#12263f" stroke-width="7"/><path d="M0 600 Q75 560 150 600 T300 600 T450 600 T600 600" fill="none" stroke="#12263f" stroke-width="7"/>
+<rect x="8" y="744" width="584" height="48" fill="#12263f"/>
+<text x="40" y="777" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#f2f9ff">S. LINDQVIST</text>
+<text x="560" y="777" text-anchor="end" font-family="Courier New, monospace" font-weight="700" font-size="22" fill="#bfe4ff">BEGINNER</text>
+</svg>

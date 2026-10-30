@@ -1,0 +1,164 @@
+/* ==============================================================================
+   NIGHT THEME (the second theme)
+   ==============================================================================
+
+   USED BY   every page. Switched on by  <html data-theme="dark">  (lib/theme.js, the moon / sun button in the header).
+
+   How it works: the whole site reads colours from variables (tokens.css). The light theme sets them on :root.
+   This file sets the SAME variables again, darker, under html[data-theme="dark"], so almost nothing else has to change.
+   Anything that used a fixed colour was moved onto a variable, or carries a  dark:  class in its JSX.
+
+   Rules of the house for Night:
+     * text is light (#e6eefb) on deep navy; muted text is #9db3cc
+     * the pastel brand colours (sun, coral, mint, lavender) become DEEPER shades, because dark text on pastel
+       has become light text, and light text needs a deeper background to stay readable (AA contrast)
+     * --color-blue is the LIGHT blue (it is used as text); buttons use --skin-accent, a deeper blue that carries white text
+
+   CLASS INDEX
+     html[data-theme="dark"]        brand tokens, skin tokens, account palette
+     .pb-*                          the account page backdrop scene
+     .rs-tab[aria-current]          the open Research tab
+     .skin-glass-*                  the account "glass" cards
+   ============================================================================== */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* ---- brand tokens (Tailwind utilities like bg-paper / text-ink read these) ---- */
+  --color-ink:      #e6eefb;
+  --color-ink-soft: #14263d;
+  --color-paper:    #0d1726;
+  --color-blue:     #6db3f0;
+  --color-coral:    #a8433e;
+  --color-sun:      #8a6414;
+  --color-mint:     #1f7a5c;
+  --color-lavender: #5b49b0;
+  --color-muted:    #9db3cc;
+  --color-line:     #24384f;
+
+  /* ---- skin tokens ---- */
+  --skin-bg:      #0d1726;
+  --skin-surface: #16253a;
+  --skin-line:    #24384f;
+  --skin-edge:    #2a3f58;
+
+  --skin-ink:     #e6eefb;
+  --skin-muted:   #9db3cc;
+
+  --skin-accent:     #2b78c9;
+  --skin-accent-ink: #ffffff;
+  --skin-pop:        #b84a44;
+  --skin-pop-ink:    #fff0ee;
+  --skin-link:       #7bbcf5;
+  --skin-danger:     #ff8a90;
+
+  --skin-deep:        #102036;
+  --skin-deep-ink:    #e6eefb;
+  --skin-deep-muted:  #9db3cc;
+  --skin-deep-soft:   rgba(109,179,240,0.08);
+  --skin-deep-line:   rgba(109,179,240,0.22);
+  --skin-deep-pop:    #6db3f0;
+
+  --skin-foot:     #091220;
+  --skin-foot-ink: #b8c8dc;
+  --skin-foot-pop: #6db3f0;
+
+  --skin-shadow:
+    0 1px 2px rgba(0,0,0,0.40),
+    0 10px 26px -14px rgba(0,0,0,0.65);
+  --skin-btn-shadow: 0 6px 18px -6px rgba(43,120,201,0.50);
+  --skin-btn-pop-shadow: 0 6px 18px -6px rgba(184,74,68,0.50);
+
+  --skin-input-bg:     #0f1d30;
+  --skin-input-border: #5f7f9e;
+  --skin-focus:        #8cc6ff;
+  --skin-backdrop:     rgba(2,8,16,0.68);
+
+  --skin-disabled-bg:  #1d2e44;
+  --skin-disabled-ink: #7289a3;
+
+  --skin-strength-1: #ff7a80;
+  --skin-strength-2: #ff7a80;
+  --skin-strength-3: #f0b44c;
+  --skin-strength-4: #55c58d;
+
+  --soft-ring: rgba(140,198,255,0.28);
+
+  /* ---- account page palette (pages/Account/Account.css) ---- */
+  --stage-ivory:   #0f1b2d;
+  --stage-paper:   #0d1726;
+  --stage-apricot: #4a2f2a;
+  --stage-rose:    #4a2a33;
+  --stage-glass:   #1d3d5e;
+  --stage-lilac:   #35295a;
+  --stage-sun:     #4a3d1c;
+  --stage-ink:     #e6eefb;
+}
+
+/* more contrast was asked for: stronger edges in Night too */
+@media (prefers-contrast: more) {
+  html[data-theme="dark"] {
+    --skin-edge: #8fb4d6;
+    --skin-input-border: #cfe3f7;
+    --skin-focus: #bfe0ff;
+    --skin-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  }
+}
+
+/* ---- Research: the open tab. Light theme uses --skin-link as its fill; in Night that variable is a LIGHT text blue,
+        so the fill uses the deeper accent blue (white text on it passes AA). */
+html[data-theme="dark"] .rs-tab[aria-current="page"] {
+  background: var(--skin-accent);
+  border-color: var(--skin-accent);
+}
+@media (min-width: 768px) {
+  html[data-theme="dark"] .rs-tab[aria-current="page"]::after { background: var(--skin-accent); }
+}
+
+/* ---- Account: avatar ring, glass stage and glass cards (their light versions are white-ish) ---- */
+html[data-theme="dark"] .skin-avatar { border-color: var(--skin-surface); }
+html[data-theme="dark"] .skin-glass-stage {
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px -24px rgba(0,0,0,0.6);
+  background:
+    radial-gradient(circle at 1px 1px, rgba(230,238,251,0.05) 1px, transparent 1.2px) 0 0 / 22px 22px,
+    radial-gradient(ellipse 65% 60% at 15% 10%, var(--stage-apricot) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 88% 88%, var(--stage-glass) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 82% 12%, var(--stage-lilac) 0%, transparent 55%),
+    var(--stage-ivory);
+}
+html[data-theme="dark"] .skin-glass-card {
+  background: rgba(22,37,58,0.92);
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 12px 28px -16px rgba(0,0,0,0.6);
+}
+html[data-theme="dark"] .skin-glass-card .skin-input { background: rgba(15,29,48,0.95); }
+html[data-theme="dark"] .skin-reduce-fx .skin-glass-card { background: var(--skin-surface); }
+@media (prefers-reduced-transparency: reduce) {
+  html[data-theme="dark"] .skin-glass-stage { background: var(--stage-ivory); }
+  html[data-theme="dark"] .skin-glass-card  { background: var(--skin-surface); }
+}
+@media (prefers-contrast: more) {
+  html[data-theme="dark"] .skin-glass-stage { background: var(--skin-bg); border-color: var(--stage-ink); }
+  html[data-theme="dark"] .skin-glass-card  { background: var(--skin-surface); border-color: var(--skin-input-border); box-shadow: 0 0 0 2px var(--skin-input-border); }
+}
+
+/* ---- Account backdrop scene (ProfileBackdrop.jsx): night sky, dim clouds, dark hills.
+        !important is needed once, because the sky gradient is written as an inline style. ---- */
+html[data-theme="dark"] .pb-scene {
+  background:
+    radial-gradient(45% 30% at 82% 10%, rgba(255,214,140,0.16), transparent 70%),
+    radial-gradient(60% 40% at 10% 0%, rgba(109,179,240,0.16), transparent 70%),
+    linear-gradient(180deg, #0a1424 0%, #0d1a2e 45%, #17202f 80%, #1d2230 100%) !important;
+}
+html[data-theme="dark"] .pb-cloud  { fill: #cfe0f5; opacity: 0.12; }
+html[data-theme="dark"] .pb-hill-1 { fill: #142b46; }
+html[data-theme="dark"] .pb-hill-2 { fill: #14392f; }
+html[data-theme="dark"] .pb-hill-3 { fill: #4a2a2c; }
+html[data-theme="dark"] .pb-hill-4 { fill: #5b312d; }
+
+/* ---- Math plane (Motion lab grid lines) ---- */
+html[data-theme="dark"] .math-plane {
+  --plane-minor: rgba(230,238,251,0.07);
+  --plane-major: rgba(230,238,251,0.14);
+}
